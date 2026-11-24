@@ -2,6 +2,8 @@
 
 A cognitive-training web app made of small games. It is plain HTML/CSS/JS with no build step.
 
+**Live app:** https://jcitizen-dev.github.io/mind-gym/. It's hosted on GitHub Pages and updates a minute or two after each push to `main`.
+
 ## Run it
 
 ```bash
