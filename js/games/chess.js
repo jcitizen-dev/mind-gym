@@ -223,6 +223,7 @@ const Chess = (() => {
                ${done < LESSONS.length && !g.games.length ? `<button class="btn" id="learn">${done ? 'Continue lessons' : 'Start learning'}</button><button class="btn ghost" id="play">Play the bot</button>`
                  : `<button class="btn" id="play">Play the bot</button>`}
              </div>`}
+        ${Device.orientTip({ tablet: 'landscape', phone: 'portrait', why: { landscape: 'The board sits beside the lesson text and coach tips, so you won\u2019t need to scroll.', portrait: 'The board fills the width, with the text and buttons underneath.' } })}
       </section>
       <section class="panel">
         <h2>Lessons <span class="muted small">${done} of ${LESSONS.length} done</span></h2>

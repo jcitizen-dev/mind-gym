@@ -266,6 +266,7 @@ const GameKit = (() => {
               : 'First session. The difficulty adjusts as you go, so it will quickly find your edge.'}
               Best so far: ${spec.levelName(g.best)}.</p>
             <div class="row"><button class="btn" id="go">Start session</button></div>`}
+          ${Device.orientTip(spec.orientation)}
         </section>
         ${spec.lobbyExtra ? `<section class="panel">${spec.lobbyExtra(g)}</section>` : ''}
         <section class="panel"><h2>How to play</h2>${spec.howTo}<p class="muted">${spec.ruleText}</p></section>

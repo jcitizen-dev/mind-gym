@@ -137,7 +137,7 @@ const SpeedSpotter = (() => {
         ctx.later(askCentre, 250);
         return false;
       });
-    }, 700);
+    }, Device.chamber ? 1600 : 700); // chamber mode: more time to settle your eyes on the +
   }
 
   function nextLevel(lv, r, active) {
@@ -186,6 +186,7 @@ const SpeedSpotter = (() => {
 
   return GameKit.create({
     id: 'speedspotter',
+    orientation: { tablet: 'portrait', why: { portrait: 'The round field is largest this way, so the edge targets are further out, like the task used in the study.' } },
     title: 'Speed Spotter',
     unitName: 'trial',
     unitsPerSession: 80,

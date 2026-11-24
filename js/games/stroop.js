@@ -54,6 +54,7 @@ const ColorClash = (() => {
 
   return GameKit.create({
     id: 'colorclash',
+    orientation: { tablet: 'portrait', why: { portrait: 'The word sits right above the four colour buttons.' } },
     title: 'Color Clash',
     unitName: 'block',
     unitsPerSession: 5,

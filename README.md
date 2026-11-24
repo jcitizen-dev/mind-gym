@@ -12,6 +12,20 @@ python3 -m http.server 8173
 
 Then open http://localhost:8173. You can also open `index.html` directly in a browser.
 
+## Chamber mode
+
+Chamber mode is a switch on the home screen, built for a tablet on a mounted arm (for example in a hyperbaric chamber) where taps are slow and deliberate. When it's on:
+
+- **Timed games are hidden:** Task Switch and Color Clash score how fast you tap, so they're left out.
+- **Dual N-Back slows down:** at least 5 seconds per letter instead of 3.
+- **Speed Spotter is marked as the recommended daily game.** Its answers are untimed, and it adds a longer pause before each flash.
+- **Bigger targets:** Corsi tiles, Multi-Object Tracking dots, Speed Spotter's direction buttons, and all buttons are larger.
+- **Accidental double taps are ignored:** a second tap within 0.45 s doesn't count.
+
+Every game's start screen also says whether to hold the device in portrait or landscape. Portrait suits most games; chess suits landscape on a tablet, so the board sits beside the text. The tip is highlighted if the device is the wrong way round, and it updates as you turn the device.
+
+Check with the chamber's safety staff before bringing in any electronic device.
+
 ## Phones and tablets
 
 The layout adapts to phones and tablets in portrait and landscape. In landscape on a phone, the board sits on the left and the answer buttons on the right.

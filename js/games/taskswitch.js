@@ -70,6 +70,7 @@ const TaskSwitch = (() => {
 
   return GameKit.create({
     id: 'taskswitch',
+    orientation: { tablet: 'portrait', why: { portrait: 'The number sits right above the two answer buttons.' } },
     title: 'Task Switch',
     unitName: 'block',
     unitsPerSession: 6,

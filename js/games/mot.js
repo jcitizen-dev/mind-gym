@@ -2,12 +2,13 @@
 // When they stop, pick out the targets. Levels add targets and speed.
 const MultiTrack = (() => {
   const { sameAsPrevious } = GameKit;
-  const SIZE = 400, R = 13, MOVE_MS = 7000, CUE_MS = 2200;
+  const SIZE = 400, MOVE_MS = 7000, CUE_MS = 2200;
   const decode = l => ({ targets: Math.min(6, 2 + Math.floor((l - 1) / 3)), speed: 70 + 35 * ((l - 1) % 3) });
   const levelName = l => { const { targets, speed } = decode(l); return `${targets} targets · speed ${['slow', 'medium', 'fast'][(speed - 70) / 35]}`; };
 
   function playUnit(ctx) {
     const { targets, speed } = decode(ctx.level);
+    const R = Device.chamber ? 19 : 13; // dot radius: bigger dots are easier to tap on a mounted tablet
     const total = targets + 5;
     const dots = [];
     while (dots.length < total) {
@@ -85,7 +86,7 @@ const MultiTrack = (() => {
       // nearest dot, with a bigger allowance for fingers than for a mouse
       const dist = d => Math.hypot(d.x - x, d.y - y);
       const hit = dots.reduce((best, d) => (dist(d) < dist(best) ? d : best));
-      if (dist(hit) > R + (Device.touch ? 16 : 6)) return;
+      if (dist(hit) > R + (Device.chamber ? 22 : Device.touch ? 16 : 6)) return;
       hit.picked = !hit.picked;
       const picked = dots.filter(d => d.picked);
       if (picked.length < targets) return;
@@ -105,6 +106,7 @@ const MultiTrack = (() => {
 
   return GameKit.create({
     id: 'mot',
+    orientation: { tablet: 'portrait', why: { portrait: 'The dots are biggest and easiest to tap this way.' } },
     title: 'Multi-Object Tracking',
     unitName: 'trial',
     unitsPerSession: 15,

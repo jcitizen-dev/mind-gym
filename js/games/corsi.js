@@ -6,7 +6,7 @@ const CorsiSpan = (() => {
   const { sameAsPrevious } = GameKit;
   // fixed, irregular tile layout (percent of the board)
   const TILES = [
-    [12, 14], [52, 8], [80, 22], [30, 36], [64, 40], [10, 62], [44, 66], [78, 70], [26, 86],
+    [12, 14], [52, 8], [82, 18], [30, 36], [64, 40], [10, 62], [44, 66], [78, 70], [26, 86],
   ];
   const decode = l => ({ span: 2 + Math.floor((l - 1) / 2), backward: l % 2 === 0 });
   const levelName = l => { const { span, backward } = decode(l); return `${span} tiles ${backward ? 'backward' : 'forward'}`; };
@@ -15,8 +15,10 @@ const CorsiSpan = (() => {
     const { span, backward } = decode(ctx.level);
     const seq = GameKit.U.shuffle([...TILES.keys()]).slice(0, span);
     const want = backward ? [...seq].reverse() : seq;
+    const size = Device.chamber ? 18 : 14;     // tile size, % of the board
+    const fit = (100 - size) / 86;             // keep bigger tiles inside the board
     ctx.stage.innerHTML = `
-      <div class="corsi-board">${TILES.map(([x, y], i) => `<button class="corsi-tile" data-i="${i}" style="left:${x}%;top:${y}%" disabled></button>`).join('')}</div>
+      <div class="corsi-board">${TILES.map(([x, y], i) => `<button class="corsi-tile" data-i="${i}" style="left:${x * fit}%;top:${y * fit}%;width:${size}%" disabled></button>`).join('')}</div>
       <p class="ss-q" id="q">Watch…</p>`;
     const tiles = [...ctx.stage.querySelectorAll('.corsi-tile')];
     const q = ctx.stage.querySelector('#q');
@@ -60,6 +62,7 @@ const CorsiSpan = (() => {
 
   return GameKit.create({
     id: 'corsi',
+    orientation: { tablet: 'portrait', why: { portrait: 'The tiles are biggest and easiest to tap this way.' } },
     title: 'Corsi Span',
     unitName: 'trial',
     unitsPerSession: 16,

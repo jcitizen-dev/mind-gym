@@ -50,6 +50,10 @@ const DualNBack = (() => {
     return null;
   }
 
+  // Chamber mode gives at least 5 s per letter so slow, steady taps still count.
+  const CHAMBER_TRIAL_MS = 5000;
+  const trialMs = () => (Device.chamber ? Math.max(CHAMBER_TRIAL_MS, g.settings.trialMs) : g.settings.trialMs);
+
   function newSessionLevel() {
     if (!g.sessions.length) return g.level; // no warm-up before your very first session
     return Math.max(1, g.level - g.settings.warmup);
@@ -147,7 +151,7 @@ const DualNBack = (() => {
     root.querySelector('#status').textContent =
       `${b.n}-back · trial ${run.i + 1} of ${b.len} · block ${g.active.blocks.length + 1} of ${g.settings.blocksPerSession}`;
     run.timers.push(setTimeout(() => root.querySelectorAll('.cell').forEach(c => c.classList.remove('on')), g.settings.stimulusMs));
-    run.timers.push(setTimeout(nextTrial, g.settings.trialMs));
+    run.timers.push(setTimeout(nextTrial, trialMs()));
   }
 
   function scoreTrial() {
@@ -235,11 +239,12 @@ const DualNBack = (() => {
             : 'First session. The level adjusts after every block, so it will quickly find your edge.'}
             Highest level reached: ${g.highest}-back.</p>
           <div class="row"><button class="btn" id="go">Start session</button></div>`}
+        ${Device.orientTip({ tablet: 'portrait', why: { portrait: 'The grid is biggest, with the Position and Sound buttons together underneath.' } })}
       </section>
 
       <section class="panel">
         <h2>How to play</h2>
-        <p>Every 3 seconds a square lights up and a letter is spoken. Press when the current one matches the one from <b>n</b> steps back.</p>
+        <p>Every ${trialMs() / 1000} seconds a square lights up and a letter is spoken. Press when the current one matches the one from <b>n</b> steps back.</p>
         <ul>
           <li><kbd>A</kbd> or the left button: <b>position</b> matches</li>
           <li><kbd>L</kbd> or the right button: <b>sound</b> matches</li>
@@ -254,7 +259,7 @@ const DualNBack = (() => {
           <label>Blocks per session <input type="number" name="blocksPerSession" min="1" max="40" value="${s.blocksPerSession}"><small>Research protocol: 20 (about 25 min)</small></label>
           <label>Warm-up levels <input type="number" name="warmup" min="0" max="3" value="${s.warmup}"><small>How far below last session's level to start</small></label>
           <label>Seconds per trial
-            <select name="trialMs">${[3000, 2500, 2000].map(v => `<option value="${v}" ${v === s.trialMs ? 'selected' : ''}>${v / 1000}${v === 3000 ? ' (research protocol)' : ''}</option>`).join('')}</select></label>
+            <select name="trialMs">${[5000, 4000, 3000, 2500, 2000].map(v => `<option value="${v}" ${v === s.trialMs ? 'selected' : ''}>${v / 1000}${v === 3000 ? ' (research protocol)' : ''}</option>`).join('')}</select>${Device.chamber ? '<small>Chamber mode is on, so trials are at least 5 seconds.</small>' : ''}</label>
           <label class="check"><input type="checkbox" name="feedback" ${s.feedback ? 'checked' : ''}> Show right/wrong feedback</label>
           <label class="check"><input type="checkbox" name="sound" ${s.sound ? 'checked' : ''}> Speak letters</label>
           <label>Current level <input type="number" name="level" min="1" max="20" value="${g.level}"><small>Override if you want to set it by hand</small></label>
