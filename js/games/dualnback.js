@@ -8,6 +8,8 @@
 const DualNBack = (() => {
   const ID = 'dualnback';
   const LETTERS = ['C', 'H', 'K', 'L', 'Q', 'R', 'S', 'T']; // consonants used by Jaeggi et al.
+  // Spoken as the letter's name: a bare capital letter makes many voices say "capital C".
+  const SPOKEN = { C: 'see', H: 'aitch', K: 'kay', L: 'ell', Q: 'cue', R: 'are', S: 'ess', T: 'tee' };
   const CELLS = [0, 1, 2, 3, 5, 6, 7, 8]; // 3x3 grid without the centre
   const RESUME_WINDOW_MS = 12 * 3600 * 1000; // an unfinished session can be continued for 12 h
 
@@ -80,7 +82,7 @@ const DualNBack = (() => {
   function speak(letter) {
     if (!g.settings.sound || !('speechSynthesis' in window)) return;
     speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(letter);
+    const u = new SpeechSynthesisUtterance(SPOKEN[letter] || letter.toLowerCase());
     u.rate = 1.1;
     speechSynthesis.speak(u);
   }
