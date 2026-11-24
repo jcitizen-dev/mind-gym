@@ -78,7 +78,13 @@ const Device = (() => {
 
   // ---------- chamber mode ----------
   // For use in a hyperbaric chamber with a mounted tablet: no timed games, slower pace, bigger targets.
-  const prefs = () => Store.game('app', { chamber: false });
+  // On by default. Devices that already saved "off" before this default changed are switched on once
+  // (prefsVersion 2); after that, turning it off sticks.
+  const prefs = () => {
+    const p = Store.game('app', { chamber: true, prefsVersion: 2 });
+    if (p.prefsVersion !== 2) { p.chamber = true; p.prefsVersion = 2; Store.save(); }
+    return p;
+  };
   const chamber = () => !!prefs().chamber;
   function setChamber(on) {
     prefs().chamber = !!on;

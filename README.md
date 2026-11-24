@@ -14,7 +14,7 @@ Then open http://localhost:8173. You can also open `index.html` directly in a br
 
 ## Chamber mode
 
-Chamber mode is a switch on the home screen, built for a tablet on a mounted arm (for example in a hyperbaric chamber) where taps are slow and deliberate. When it's on:
+Chamber mode is a switch on the home screen, **on by default**, built for a tablet on a mounted arm (for example in a hyperbaric chamber) where taps are slow and deliberate. When it's on:
 
 - **Timed games are hidden:** Task Switch and Color Clash score how fast you tap, so they're left out.
 - **Dual N-Back slows down:** at least 5 seconds per letter instead of 3.
