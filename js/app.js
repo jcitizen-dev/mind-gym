@@ -13,6 +13,8 @@ const GAMES = [
     blurb: 'Name the ink colour, not the word. Trains ignoring distractions.' },
   { id: 'mot', title: 'Multi-Object Tracking', ready: true, module: MultiTrack, evidence: 'Limited evidence',
     blurb: 'Follow several moving dots among identical decoys. Spread-out attention.' },
+  { id: 'chess', title: 'Chess', ready: true, module: Chess, evidence: 'Limited evidence',
+    blurb: 'Learn chess from zero with short hands-on lessons, then play a bot that adjusts to your skill.' },
 ];
 
 const app = document.getElementById('app');
@@ -29,7 +31,10 @@ function home() {
     <div class="cards">
       ${GAMES.map(g => `
         <a class="card ${g.ready ? '' : 'soon'}" ${g.ready ? `href="#/${g.id}"` : ''}>
-          <h2>${esc(g.title)}</h2>
+          <div class="card-head">
+            ${ICONS[g.id] ? `<span class="game-icon">${ICONS[g.id]}</span>` : ''}
+            <h2>${esc(g.title)}</h2>
+          </div>
           ${g.evidence ? `<span class="evidence ${g.evidence.split(' ')[0].toLowerCase()}">${esc(g.evidence)}</span>` : ''}
           <p>${esc(g.blurb)}</p>
           <div class="card-foot">${g.ready ? g.module.cardStatus() : '<span class="tag">Coming soon</span>'}</div>

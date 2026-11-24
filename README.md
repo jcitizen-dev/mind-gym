@@ -41,7 +41,21 @@ All progress is kept in the browser's `localStorage` under the key `mindgym.v1`.
 | Color Clash | Ignoring distractions (Stroop task) | Limited | Same block rule as Task Switch. Higher levels allow less time and have more clashing words |
 | Multi-Object Tracking | Spread-out attention | Limited | 2 perfect trials in a row → up, 2 imperfect in a row → down. Higher levels add speed, then targets |
 
-Every game saves after each trial or block. Each new session starts with a short warm-up a little below where you finished, and you can change it in that game's settings.
+| Chess | Planning and attention | Limited. Chess training mostly improves chess itself; links to lower dementia risk come from observational studies | Elo rating estimate after every game; the next bot is the one of 12 levels nearest your rating |
+
+Every game saves after each trial or block.
+
+## Chess
+
+- **Lessons:** 12 short lessons for complete beginners: the board, each piece (with "collect the stars" exercises), capturing and piece values, check, checkmate, castling, stalemate, and opening tips.
+- **Rules engine:** `js/chess/engine.js`, written from scratch. It matches the standard move-count ("perft") results for five well-known test positions, which covers castling, en passant, promotion and pins.
+- **Bot:** 12 levels. The low levels play many random or careless moves; the top levels look 3–5 moves ahead.
+- **Adapting to you:** your rating estimate starts at 250 and is updated with the Elo formula after each game, and the next bot is chosen to match it. Resigning counts as a loss; hints and take-backs don't affect the rating.
+- **Coach (can be turned off):**
+  - warns when your last move leaves a piece unprotected, and offers a take-back
+  - points out bot pieces you can win
+  - explains why an illegal move isn't allowed
+- **Saving:** the game in progress is saved after every move. Each new session starts with a short warm-up a little below where you finished, and you can change it in that game's settings.
 
 ## Dual N-Back protocol
 
